@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atenea - Boton de panico</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" color="#0d1117">
+    <link rel="shortcut icon" href="assets/icon.png" type="image/x-icon">
+</head>
+<body class="dark-theme">
+  <div id="app">
+    <!-- Botón de pánico gigante -->
+    <div style="margin: 2rem 0; text-align: center;">
+      <button id="btn-anon-panic" style="background-color: #d73a49; color: white; font-size: 2rem; font-weight: bold; padding: 1.5rem 3rem; border: none; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 15px rgba(215, 58, 73, 0.5); width: 100%; max-width: 300px; transition: transform 0.2s;">PÁNICO</button>
+    </div>
+  </div>
+    <script src="js/supabase.js"></script>
+    <script src="js/main.js"></script>
+
+  <!-- Service Worker (opcional) -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => console.log('Service Worker registrado'))
+          .catch(err => console.log('Error SW:', err));
+      });
+    }
+  </script>
+</body>
+</html>
