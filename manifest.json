@@ -7,7 +7,6 @@
   "display_override": ["standalone", "fullscreen"],
   "background_color": "#0d1117",
   "theme_color": "#161b22",
-  "orientation": "landscape-primary",
   "icons": [
     {
       "src": "icons/manifest-icon-192.maskable.png",
