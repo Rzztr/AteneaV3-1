@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" color="#0d1117">
-    <link rel="shortcut icon" href="assets/icon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="icon.png" type="image/x-icon">
 </head>
 <body class="dark-theme">
   <div id="app">
@@ -18,16 +18,14 @@
   </div>
     <script src="js/supabase.js"></script>
     <script src="js/main.js"></script>
-
-  <!-- Service Worker (opcional) -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-          .then(reg => console.log('Service Worker registrado'))
-          .catch(err => console.log('Error SW:', err));
-      });
-    }
-  </script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(reg => console.log('Service Worker registrado'))
+            .catch(err => console.log('Error SW:', err));
+        });
+      }
+    </script>
 </body>
 </html>

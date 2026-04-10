@@ -10,16 +10,28 @@
   "orientation": "landscape-primary",
   "icons": [
     {
-      "src": "assets/icons/icon.png",
-      "type": "image/png",
+      "src": "icons/manifest-icon-192.maskable.png",
       "sizes": "192x192",
-      "purpose": "any maskable"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "assets/icons/icon.png",
+      "src": "icons/manifest-icon-192.maskable.png",
+      "sizes": "192x192",
       "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icons/manifest-icon-512.maskable.png",
       "sizes": "512x512",
-      "purpose": "any maskable"
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/manifest-icon-512.maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
   "scope": "/",
