@@ -1,1 +1,84 @@
-const DB_NAME="AteneaDB";const DB_VERSION=1;const STORE_NAME="pending_incidents";function initDB(){return new Promise((resolve,reject)=>{const request=indexedDB.open(DB_NAME,DB_VERSION);request.onerror=event=>{console.error("[IndexedDB] Database error:",event.target.error);reject(event.target.error)};request.onsuccess=event=>{console.log("[IndexedDB] Database opened successfully");resolve(event.target.result)};request.onupgradeneeded=event=>{const db=event.target.result;if(!db.objectStoreNames.contains(STORE_NAME)){db.createObjectStore(STORE_NAME,{keyPath:"id",autoIncrement:true});console.log("[IndexedDB] Object store created:",STORE_NAME)}}})}async function savePendingIncident(incidentData){try{const db=await initDB();return new Promise((resolve,reject)=>{const transaction=db.transaction([STORE_NAME],"readwrite");const store=transaction.objectStore(STORE_NAME);const request=store.add(incidentData);request.onsuccess=()=>resolve(request.result);request.onerror=e=>{console.error("[IndexedDB] Error saving incident:",e.target.error);reject(e.target.error)}})}catch(error){console.error("[IndexedDB] Failed to init DB for saving:",error)}}async function getPendingIncidents(){try{const db=await initDB();return new Promise((resolve,reject)=>{const transaction=db.transaction([STORE_NAME],"readonly");const store=transaction.objectStore(STORE_NAME);const request=store.getAll();request.onsuccess=()=>resolve(request.result);request.onerror=e=>{console.error("[IndexedDB] Error getting incidents:",e.target.error);reject(e.target.error)}})}catch(error){console.error("[IndexedDB] Failed to init DB for reading:",error);return[]}}async function removePendingIncident(id){try{const db=await initDB();return new Promise((resolve,reject)=>{const transaction=db.transaction([STORE_NAME],"readwrite");const store=transaction.objectStore(STORE_NAME);const request=store.delete(id);request.onsuccess=()=>resolve();request.onerror=e=>{console.error("[IndexedDB] Error removing incident:",e.target.error);reject(e.target.error)}})}catch(error){console.error("[IndexedDB] Failed to init DB for deleting:",error)}}window.db={init:initDB,savePendingIncident:savePendingIncident,getPendingIncidents:getPendingIncidents,removePendingIncident:removePendingIncident};
+const DB_NAME = "AteneaDB";
+const DB_VERSION = 1;
+const STORE_NAME = "pending_incidents";
+function initDB() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(DB_NAME, DB_VERSION);
+    request.onerror = (event) => {
+      console.error("[IndexedDB] Database error:", event.target.error);
+      reject(event.target.error);
+    };
+    request.onsuccess = (event) => {
+      console.log("[IndexedDB] Database opened successfully");
+      resolve(event.target.result);
+    };
+    request.onupgradeneeded = (event) => {
+      const db = event.target.result;
+      if (!db.objectStoreNames.contains(STORE_NAME)) {
+        db.createObjectStore(STORE_NAME, {
+          keyPath: "id",
+          autoIncrement: true,
+        });
+        console.log("[IndexedDB] Object store created:", STORE_NAME);
+      }
+    };
+  });
+}
+async function savePendingIncident(incidentData) {
+  try {
+    const db = await initDB();
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction([STORE_NAME], "readwrite");
+      const store = transaction.objectStore(STORE_NAME);
+      const request = store.add(incidentData);
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = (e) => {
+        console.error("[IndexedDB] Error saving incident:", e.target.error);
+        reject(e.target.error);
+      };
+    });
+  } catch (error) {
+    console.error("[IndexedDB] Failed to init DB for saving:", error);
+  }
+}
+async function getPendingIncidents() {
+  try {
+    const db = await initDB();
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction([STORE_NAME], "readonly");
+      const store = transaction.objectStore(STORE_NAME);
+      const request = store.getAll();
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = (e) => {
+        console.error("[IndexedDB] Error getting incidents:", e.target.error);
+        reject(e.target.error);
+      };
+    });
+  } catch (error) {
+    console.error("[IndexedDB] Failed to init DB for reading:", error);
+    return [];
+  }
+}
+async function removePendingIncident(id) {
+  try {
+    const db = await initDB();
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction([STORE_NAME], "readwrite");
+      const store = transaction.objectStore(STORE_NAME);
+      const request = store.delete(id);
+      request.onsuccess = () => resolve();
+      request.onerror = (e) => {
+        console.error("[IndexedDB] Error removing incident:", e.target.error);
+        reject(e.target.error);
+      };
+    });
+  } catch (error) {
+    console.error("[IndexedDB] Failed to init DB for deleting:", error);
+  }
+}
+window.db = {
+  init: initDB,
+  savePendingIncident: savePendingIncident,
+  getPendingIncidents: getPendingIncidents,
+  removePendingIncident: removePendingIncident,
+};
