@@ -1,0 +1,83 @@
+:root {
+  --danger: #ff0033;
+  --dark-bg: #050505;
+  --glass: rgba(255, 255, 255, 0.03);
+}
+
+body {
+  background-color: var(--dark-bg);
+  color: #eee;
+  font-family: 'Inter', -apple-system, sans-serif;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* El Botón Nuclear */
+#btn-anon-panic {
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ff0033 0%, #8b0000 100%);
+  border: 12px solid #1a1a1a;
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  cursor: pointer;
+  box-shadow: 0 0 50px rgba(255, 0, 51, 0.4);
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: pulse-red 2s infinite;
+  z-index: 10;
+}
+
+@keyframes pulse-red {
+  0% { box-shadow: 0 0 0 0 rgba(255, 0, 51, 0.7); }
+  70% { box-shadow: 0 0 0 40px rgba(255, 0, 51, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 0, 51, 0); }
+}
+
+#btn-anon-panic:active {
+  transform: scale(0.9);
+  filter: brightness(1.3);
+}
+
+#btn-anon-panic:disabled {
+  background: #222;
+  border-color: #111;
+  animation: none;
+  box-shadow: none;
+  color: #444;
+}
+
+/* Pantalla de Bloqueo (Modo Sigilo) */
+#fake-off-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  z-index: 99999;
+  cursor: none;
+}
+
+/* Textos de estado */
+.status-monitor {
+  margin-top: 40px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: #444;
+}
+
+#status-msg {
+  color: var(--danger);
+  font-weight: bold;
+}
