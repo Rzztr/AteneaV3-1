@@ -1,5 +1,5 @@
 const SUPABASE_URL = "https://pltwgpnqggznunmcvtad.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_7W0hgCVN_CIU0MrKdXhB0w_moW0BS_S";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsdHdncG5xZ2d6bnVubWN2dGFkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1Nzg1MDcsImV4cCI6MjA5MDE1NDUwN30.kEBaYIo9NwtXiG7vbNZZ07G3k1Cw48sK4RvsVpxjtDc";
 const HEADERS = {
   "Content-Type": "application/json",
   apikey: SUPABASE_ANON_KEY,
@@ -63,3 +63,22 @@ async function updateAnonymousIncidentLocation(id, lat, lng) {
   return data;
 }
 window.updateAnonymousIncidentLocation = updateAnonymousIncidentLocation;
+
+async function checkRemoteLock() {
+    console.log("[Lock] Verificando bloqueo remoto...");
+    const { data, error } = await sbFetch(
+        "incidencias?select=status&status=in.(bloqueado,libre)&order=created_at.desc&limit=1"
+    );
+    if (error) {
+        console.error("[Lock] Error al consultar bloqueo:", error);
+        return false;
+    }
+    if (!data || data.length === 0) {
+        console.log("[Lock] Sin registros de bloqueo encontrados.");
+        return false;
+    }
+    const isLocked = data[0].status === "bloqueado";
+    console.log("[Lock] Resultado:", isLocked ? "BLOQUEADO" : "LIBRE");
+    return isLocked;
+}
+window.checkRemoteLock = checkRemoteLock;
